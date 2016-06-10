@@ -14,22 +14,39 @@
 
   <style>
 
-
-    .tabs__tabcontent[aria-hidden=true] {
-      display: none;
+    #page {
+      width: 960px;
     }
 
-    .tabs__link {
+    .tabs {
+      width: 600px;
+    }
 
+    .tablist {
+      display: table;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    .tablist-item {
+      border: 1px solid black;
+      display: table-cell;
+    }
+
+    .tablist-link {
+      display: block;
+      padding: 10px 20px;
       text-decoration: none;
     }
 
-    .tabs__link:focus, .tabs__link:hover, .tabs__link:active, .tabs__link[aria-selected="true"] {
-      color: #f00;
+    .tabcontent {
+      border: 1px solid black;
+      padding: 10px 20px;
     }
 
-    #page {
-      width: 960px;
+    .tabcontent[aria-hidden="true"] {
+      display: none;
     }
 
   </style>
@@ -38,60 +55,54 @@
   <div id="page">
     <h1>Tabs example</h1>
 
+    <a href="#id_third" class="js-link-to-tab">link to tab</a>
+
     <div class="tabs">
-      <ul class="tabs__list row w100" data-hx="h2">
-        <li class="tabs__item col 25">
-          <a href="#id_first" id="label_id_first" class="tabs__link">1st tab</a>
+      <ul class="tablist" data-hx="h2">
+        <li class="tablist-item">
+          <a href="#id_first" id="label_id_first" class="tablist-link">1st tab</a>
         </li>
-        <li class="tabs__item col 25">
-          <a href="#id_second" id="label_id_second" class="tabs__link">2nd tab</a>
+        <li class="tablist-item">
+          <a href="#id_second" id="label_id_second" class="tablist-link">2nd tab</a>
         </li>
-        <li class="tabs__item col 25">
-          <a href="#id_third" id="label_id_third" class="tabs__link">3rd tab</a>
+        <li class="tablist-item">
+          <a href="#id_third" id="label_id_third" class="tablist-link">3rd tab</a>
         </li>
-        <li class="tabs__item col 25">
-          <a href="#id_fourth" id="label_id_fourth" class="tabs__link">4th tab</a>
+        <li class="tablist-item">
+          <a href="#id_fourth" id="label_id_fourth" class="tablist-link">4th tab</a>
         </li>
       </ul>
-      <div id="id_first" class="tabs__tabcontent">
-        here the content of 1st tab
+      <div id="id_first" class="tabcontent">
+       here the content of 1st tab
       </div>
-      <div id="id_second" class="tabs__tabcontent">
-        here the content of 2nd tab
+      <div id="id_second" class="tabcontent">
+       here the content of 2nd tab
       </div>
-      <div id="id_third" class="tabs__tabcontent">
-        here the content of 3rd tab, with a select with an id="id_in_tab"
-        <select name="fdsfdsf" id="id_in_tab">
-          <option value=""></option>
-          <option value="12">1241</option>
-        </select>
+      <div id="id_third" class="tabcontent">
+       here the content of 3rd tab
       </div>
-      <div id="id_fourth" class="tabs__tabcontent">
-        here the content of 4th tab
+      <div id="id_fourth" class="tabcontent">
+       here the content of 4th tab
       </div>
     </div>
 
-    <br><br>
-
     <div class="tabs">
-      <ul class="tabs__list row w100" data-existing-hx="h2">
-        <li class="tabs__item col w50">
-          <a href="#suite" id="label_suite" class="tabs__link">Other </a>
+      <ul class="tablist" data-existing-hx="h2">
+        <li class="tablist-item">
+          <a href="#id_first_two" id="label_id_first_tro" class="tablist-link">1st tab</a>
         </li>
-        <li class="tabs__item col w50">
-          <a href="#autresuite" id="label_autresuite" class="tabs__link">Other other</a>
+        <li class="tablist-item">
+          <a href="#id_second_two" id="label_id_second_two" class="tablist-link">2nd tab</a>
         </li>
       </ul>
-      <div id="suite" class="tabs__tabcontent">
-        <h2>plop</h2>
-        other
+      <div id="id_first_two" class="tabcontent">
+       here the content of 1st tab
       </div>
-      <div id="autresuite" class="tabs__tabcontent">
-        <h2>toto</h2>
-        other other
+      <div id="id_second_two" class="tabcontent">
+       here the content of 2nd tab
       </div>
     </div>
-    <br><br><br>
+
   </div>
 </body>
 </html>
