@@ -1,8 +1,7 @@
 /**
  * @module Tabs
  * @requires jquery
- * @requires jquery.exists
- * @author André Meier da Silva
+ * @author dev@spike-shape.de
  */
 define(['jquery'], function($) {
 
@@ -17,10 +16,10 @@ define(['jquery'], function($) {
      */
     options: {
       tab_parent: '.tabs', // div
-      tab_list: '.js-tablist', // ul
-      tab_item: '.js-tablist__item', // li
-      tab_link: '.js-tablist__link', // a
-      tab_content: '.js-tabcontent', // div
+      tab_list: '.tablist', // ul
+      tab_item: '.tablist-item', // li
+      tab_link: '.tablist-link', // a
+      tab_content: '.tabcontent', // div
       js_link_to_tab: '.js-link-to-tab' // link class
     },
 
@@ -29,7 +28,7 @@ define(['jquery'], function($) {
      * @function _cacheElements
      * @private
      */
-    _cacheElements: function() {
+    _cacheElements: function(options_custom) {
       this.options = $.extend(this.options, options_custom);
 
       this.hash = window.location.hash.replace( "#", "" );
@@ -43,12 +42,124 @@ define(['jquery'], function($) {
      * @public
      */
     init: function(options_custom) {
-      this._cacheElements();
+      Tabs._cacheElements(options_custom);
 
-      if (this.$tabs.length) {
-        this.$tab_list = Tabs.$tabs.find(Tabs.options.tab_list);
-        this._initTabs();
+      if (Tabs.$tabs.length) {
+        Tabs.$tab_list = Tabs.$tabs.find(Tabs.options.tab_list);
+        Tabs._initTabs();
+        Tabs._bindEvents();
       }
+    },
+
+    /**
+     * Initialize logic of the tabs.
+     * @function _initTabs
+     * @private
+     */
+    _initTabs: function() {
+      Tabs.$tab_list.each( function () {
+        var $this_tab_list = $( this ),
+            options = $this_tab_list.data(),
+            $tabs_prefix_classes = typeof options.tabsPrefixClass !== 'undefined' ? options.tabsPrefixClass + '-' : '',
+            $hx = typeof options.hx !== 'undefined' ? options.hx : '',
+            $existing_hx = typeof options.existingHx !== 'undefined' ? options.existingHx : '',
+            $this_tab_list_items = $this_tab_list.children( Tabs.options.tab_item ),
+            $this_tab_list_links = $this_tab_list.find( Tabs.options.tab_link );
+
+        // roles init
+        $this_tab_list.attr( "role", "tablist" );                   // ul
+        $this_tab_list_items.attr( "role", "presentation" );        // li
+        $this_tab_list_links.attr( "role", "tab" );                 // a
+
+        // classes init
+        $this_tab_list.addClass( $tabs_prefix_classes + Tabs.options.tab_list.replace('.', '') );
+        $this_tab_list_items.addClass( $tabs_prefix_classes + Tabs.options.tab_item.replace('.', '') );
+        $this_tab_list_links.addClass( $tabs_prefix_classes + Tabs.options.tab_link.replace('.', '') );
+
+        // controls/tabindex attributes
+        $this_tab_list_links.each( function () {
+          var $this = $( this ),
+              $hx_generated_class = typeof options.tabsGeneratedHxClass !== 'undefined' ? options.tabsGeneratedHxClass : 'invisible',
+              $href = $this.attr( "href" ),
+              $controls = $( $href ),
+              $text = $this.text();
+
+          if ( $hx !== "" ) {
+            $controls.prepend('<' + $hx + ' class="' + $hx_generated_class + '" tabindex="0">' + $text + '</' + $hx + '>');
+          }
+
+          if ( $existing_hx !== "" ) {
+            $controls.find($existing_hx + ':first-child').attr('tabindex',0);
+          }
+
+          if ( typeof $href !== "undefined" && $href !== "" && $href !== "#" ) {
+            $this.attr({
+              "aria-controls": $href.replace( "#", "" ),
+              "tabindex": -1,
+              "aria-selected": "false"
+            });
+          }
+
+          $this.removeAttr("href");
+        });
+      });
+
+      /* Tabs content ---------------------------------------------------------------------------------------------------- */
+      $( Tabs.options.tab_content ).attr({
+        "role": "tabpanel",             // contents
+        "aria-hidden": "true"           // all hidden
+        //"tabindex": 0
+      })
+      .each( function() {
+        var $this = $( this ),
+            $this_id = $this.attr( "id" ),
+            $prefix_attribute = $("#label_" + $this_id ).closest(Tabs.options.tab_list).attr( 'data-tabs-prefix-class' ),
+            $tabs_prefix_classes = typeof $prefix_attribute !== 'undefined' ? $prefix_attribute + '-' : '';
+        // label by link
+        $this.attr( "aria-labelledby", "label_" + $this_id );
+
+        $this.addClass ( $tabs_prefix_classes + Tabs.options.tab_content.replace('.', ''));
+      });
+
+      // search if hash is ON tabs
+      if ( Tabs.hash !== "" && $( "#" + Tabs.hash + Tabs.options.tab_content ).length !== 0 ) {
+        // display
+        $( "#" + Tabs.hash + Tabs.options.tab_content ).removeAttr( "aria-hidden" );
+        // selection menu
+        $( "#label_" + Tabs.hash + Tabs.options.tab_link ).attr({
+          "aria-selected": "true",
+          "tabindex": 0
+        });
+      }
+      // search if hash is IN tabs
+      if ( Tabs.hash !== "" && $( "#" + Tabs.hash ).parents( Tabs.options.tab_content ).length ){
+        var $this_hash = $( "#" + Tabs.hash ),
+            $tab_content_parent = $this_hash.parents( Tabs.options.tab_content ),
+            $tab_content_parent_id = $tab_content_parent.attr( 'id' );
+
+        $tab_content_parent.removeAttr( "aria-hidden" );
+        // selection menu
+        $( "#label_" + $tab_content_parent_id + ".js-tablist__link" ).attr({
+          "aria-selected": "true",
+          "tabindex": 0
+        });
+      }
+
+      // if no selected => select first
+      Tabs.$tabs.each( function() {
+        var $this = $( this ),
+            $tab_selected = $this.find( Tabs.options.tab_link + '[aria-selected="true"]' ),
+            $first_link = $this.find( Tabs.options.tab_link + ':first' ),
+            $first_content = $this.find( Tabs.options.tab_content + ':first' );
+
+        if ( $tab_selected.length === 0 ) {
+          $first_link.attr({
+            "aria-selected": "true",
+            "tabindex": 0
+          });
+          $first_content.removeAttr( "aria-hidden" );
+        }
+      });
     },
 
     /**
@@ -197,117 +308,6 @@ define(['jquery'], function($) {
         setTimeout(function(){
           $button_to_click.focus();
         }, 10);
-      });
-    },
-
-    /**
-     * Initialize logic of the tabs.
-     * @function _initTabs
-     * @private
-     */
-    _initTabs: function() {
-      Tabs.$tab_list.each( function () {
-        var $this_tab_list = $( this ),
-            options = $this_tab_list.data(),
-            $tabs_prefix_classes = typeof options.tabsPrefixClass !== 'undefined' ? options.tabsPrefixClass + '-' : '',
-            $hx = typeof options.hx !== 'undefined' ? options.hx : '',
-            $existing_hx = typeof options.existingHx !== 'undefined' ? options.existingHx : '',
-            $this_tab_list_items = $this_tab_list.children( Tabs.options.tab_item ),
-            $this_tab_list_links = $this_tab_list.find( Tabs.options.tab_link );
-
-        // roles init
-        $this_tab_list.attr( "role", "tablist" );                   // ul
-        $this_tab_list_items.attr( "role", "presentation" );        // li
-        $this_tab_list_links.attr( "role", "tab" );                 // a
-
-        // classes init
-        $this_tab_list.addClass( $tabs_prefix_classes + Tabs.options.tab_list.replace('.', '') );
-        $this_tab_list_items.addClass( $tabs_prefix_classes + Tabs.options.tab_item.replace('.', '') );
-        $this_tab_list_links.addClass( $tabs_prefix_classes + Tabs.options.tab_link.replace('.', '') );
-
-        // controls/tabindex attributes
-        $this_tab_list_links.each( function () {
-          var $this = $( this ),
-              $hx_generated_class = typeof options.tabsGeneratedHxClass !== 'undefined' ? options.tabsGeneratedHxClass : 'invisible',
-              $href = $this.attr( "href" ),
-              $controls = $( $href ),
-              $text = $this.text();
-
-          if ( $hx !== "" ) {
-            $controls.prepend('<' + $hx + ' class="' + $hx_generated_class + '" tabindex="0">' + $text + '</' + $hx + '>');
-          }
-
-          if ( $existing_hx !== "" ) {
-            $controls.find($existing_hx + ':first-child').attr('tabindex',0);
-          }
-
-          if ( typeof $href !== "undefined" && $href !== "" && $href !== "#" ) {
-            $this.attr({
-              "aria-controls": $href.replace( "#", "" ),
-              "tabindex": -1,
-              "aria-selected": "false"
-            });
-          }
-
-          $this.removeAttr("href");
-        });
-      });
-
-      /* Tabs content ---------------------------------------------------------------------------------------------------- */
-      $( Tabs.options.tab_content ).attr({
-        "role": "tabpanel",             // contents
-        "aria-hidden": "true"           // all hidden
-        //"tabindex": 0
-      })
-      .each( function() {
-        var $this = $( this ),
-            $this_id = $this.attr( "id" ),
-            $prefix_attribute = $("#label_" + $this_id ).closest(Tabs.options.tab_list).attr( 'data-tabs-prefix-class' ),
-            $tabs_prefix_classes = typeof $prefix_attribute !== 'undefined' ? $prefix_attribute + '-' : '';
-        // label by link
-        $this.attr( "aria-labelledby", "label_" + $this_id );
-
-        $this.addClass ( $tabs_prefix_classes + Tabs.options.tab_content.replace('.', ''));
-      });
-
-      // search if hash is ON tabs
-      if ( Tabs.hash !== "" && $( "#" + hash + Tabs.options.tab_content ).length !== 0 ) {
-        // display
-        $( "#" + Tabs.hash + Tabs.options.tab_content ).removeAttr( "aria-hidden" );
-        // selection menu
-        $( "#label_" + Tabs.hash + Tabs.options.tab_link ).attr({
-          "aria-selected": "true",
-          "tabindex": 0
-        });
-      }
-      // search if hash is IN tabs
-      if ( Tabs.hash !== "" && $( "#" + Tabs.hash ).parents( Tabs.options.tab_content ).length ){
-        var $this_hash = $( "#" + Tabs.hash ),
-            $tab_content_parent = $this_hash.parents( Tabs.options.tab_content ),
-            $tab_content_parent_id = $tab_content_parent.attr( 'id' );
-
-        $tab_content_parent.removeAttr( "aria-hidden" );
-        // selection menu
-        $( "#label_" + $tab_content_parent_id + ".js-tablist__link" ).attr({
-          "aria-selected": "true",
-          "tabindex": 0
-        });
-      }
-
-      // if no selected => select first
-      Tabs.$tabs.each( function() {
-        var $this = $( this ),
-            $tab_selected = $this.find( Tabs.options.tab_link + '[aria-selected="true"]' ),
-            $first_link = $this.find( Tabs.options.tab_link + ':first' ),
-            $first_content = $this.find( Tabs.options.tab_content + ':first' );
-
-        if ( $tab_selected.length === 0 ) {
-          $first_link.attr({
-            "aria-selected": "true",
-            "tabindex": 0
-          });
-          $first_content.removeAttr( "aria-hidden" );
-        }
       });
     }
   };
