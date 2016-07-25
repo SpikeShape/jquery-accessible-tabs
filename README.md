@@ -2,11 +2,12 @@
 ===========================
 
 __This is a work-in-progress!__
-I am working on a rework to use this script as a requireJS library. Use at your own risk.
-I haven't updated the demo yet but I amw orking on a working example.
-The script itself works perfectly fine.
+I am working on a rework to use this script as a UMD (Universal Module Definition - for mor information check this [link](http://davidbcalhoun.com/2014/what-is-amd-commonjs-and-umd/ "What Is AMD, CommonJS, and UMD? by David Calhoun")) module.
+Use at your own risk.
+I haven't updated the demo yet but I am working on an example.
+The script itself works perfectly fine, though.
 
-A presentation and demo page is here: http://a11y.nicolas-hoffmann.net/tabs/
+You can find a presentation and demo page of the original code here: http://a11y.nicolas-hoffmann.net/tabs/
 
 This simple script transforms this simple list of anchors to contents:
 
