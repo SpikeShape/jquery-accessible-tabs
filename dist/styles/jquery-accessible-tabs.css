@@ -1,0 +1,18 @@
+[aria-hidden="true"] {
+  display: none;
+}
+
+.tablist {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tablist-item {
+  display: inline-block;
+}
+
+.tablist-link {
+  display: block;
+  padding: 5px 10px;
+}

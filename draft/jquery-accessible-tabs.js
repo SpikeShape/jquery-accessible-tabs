@@ -7,7 +7,7 @@ $(document).ready(function(){
          */
         // Store current URL hash.
         var hash = window.location.hash.replace( "#", "" );
- 
+
         /* Tabs ------------------------------------------------------------------------------------------------------------ */
         var $tabs = $( ".js-tabs" );
 
@@ -22,17 +22,17 @@ $(document).ready(function(){
                     $existing_hx = typeof options.existingHx !== 'undefined' ? options.existingHx : '',
                     $this_tab_list_items = $this_tab_list.children( ".js-tablist__item" ),
                     $this_tab_list_links = $this_tab_list.find( ".js-tablist__link" );
-                
+
                 // roles init
-                $this_tab_list.attr( "role", "tablist" );                   // ul        
+                $this_tab_list.attr( "role", "tablist" );                   // ul
                 $this_tab_list_items.attr( "role", "presentation" );        // li
                 $this_tab_list_links.attr( "role", "tab" );                 // a
-                
+
                 // classes init
                 $this_tab_list.addClass( $tabs_prefix_classes + 'tabs__list' );
                 $this_tab_list_items.addClass( $tabs_prefix_classes + 'tabs__item' );
                 $this_tab_list_links.addClass( $tabs_prefix_classes + 'tabs__link' );
-                    
+
                 // controls/tabindex attributes
                 $this_tab_list_links.each( function () {
                     var $this = $( this ),
@@ -40,7 +40,7 @@ $(document).ready(function(){
                         $href = $this.attr( "href" ),
                         $controls = $( $href ),
                         $text = $this.text();
-                            
+
                     if ( $hx !== "" ) {
                        $controls.prepend('<' + $hx + ' class="' + $hx_generated_class + '" tabindex="0">' + $text + '</' + $hx + '>');
                     }
@@ -59,7 +59,7 @@ $(document).ready(function(){
 
                     } );
             } );
-     
+
             /* Tabs content ---------------------------------------------------------------------------------------------------- */
             $( ".js-tabcontent" ).attr({
                     "role": "tabpanel",             // contents
@@ -73,10 +73,10 @@ $(document).ready(function(){
                         $tabs_prefix_classes = typeof $prefix_attribute !== 'undefined' ? $prefix_attribute + '-' : '';
                     // label by link
                     $this.attr( "aria-labelledby", "label_" + $this_id );
-                    
+
                     $this.addClass ( $tabs_prefix_classes + 'tabs__content');
             });
-     
+
             // search if hash is ON tabs
             if ( hash !== "" && $( "#" + hash + ".js-tabcontent" ).length !== 0 ) {
                     // display
@@ -92,7 +92,7 @@ $(document).ready(function(){
                 var $this_hash = $( "#" + hash ),
                     $tab_content_parent = $this_hash.parents( '.js-tabcontent' ),
                     $tab_content_parent_id = $tab_content_parent.attr( 'id' );
-                    
+
                     $tab_content_parent.removeAttr( "aria-hidden" );
                     // selection menu
                     $( "#label_" + $tab_content_parent_id + ".js-tablist__link" ).attr({
@@ -100,14 +100,14 @@ $(document).ready(function(){
                             "tabindex": 0
                     });
             }
-     
+
             // if no selected => select first
             $tabs.each( function() {
                     var $this = $( this ),
                         $tab_selected = $this.find( '.js-tablist__link[aria-selected="true"]' ),
                         $first_link = $this.find( ".js-tablist__link:first" ),
                         $first_content = $this.find( ".js-tabcontent:first" );
-                    
+
                     if ( $tab_selected.length === 0 ) {
                        $first_link.attr({
                              "aria-selected": "true",
@@ -116,7 +116,7 @@ $(document).ready(function(){
                        $first_content.removeAttr( "aria-hidden" );
                     }
             } );
-     
+
             /* Events ---------------------------------------------------------------------------------------------------------- */
             /* click on a tab link */
             $( "body" ).on( "click", ".js-tablist__link", function( event ) {
@@ -126,19 +126,19 @@ $(document).ready(function(){
                         $parent = $this.closest( ".js-tabs" ),
                         $all_tab_links = $parent.find( ".js-tablist__link" ),
                         $all_tab_contents = $parent.find( ".js-tabcontent" );
-     
+
                     // aria selected false on all links
-                    $all_tab_links.attr({ 
+                    $all_tab_links.attr({
                         "tabindex": -1,
                         "aria-selected": "false"
                         });
-     
+
                     // add aria selected on $this
-                    $this.attr({    
+                    $this.attr({
                         "aria-selected": "true",
                         "tabindex": 0
                     });
-     
+
                     // add aria-hidden on all tabs contents
                     $all_tab_contents.attr( "aria-hidden", "true" );
 
@@ -146,7 +146,7 @@ $(document).ready(function(){
                     $tab_content_linked.removeAttr( "aria-hidden" );
 
                     // add fragment (timeout for transitions)
-                    setTimeout(function(){ history.pushState(null, null, location.pathname + location.search + '#' + $hash_to_update)}, 1000);
+                    setTimeout(function(){ history.pushState(null, null, location.pathname + location.search + '#' + $hash_to_update);}, 1000);
 
                     event.preventDefault();
             } )
@@ -158,12 +158,12 @@ $(document).ready(function(){
                         $last_link = $parent.find( ".js-tablist__item:last-child .js-tablist__link" ),
                         $first_link = $parent.find( ".js-tablist__item:first-child .js-tablist__link" ),
                         $focus_on_tab_only = false;
-                    
+
                     // some event should be activated only if the focus is on tabs (not on tabpanel)
                     if ( $( document.activeElement ).is( $parent.find('.js-tablist__link') ) ){
                        $focus_on_tab_only = true;
                        }
-                     
+
                     // catch keyboard event only if focus is on tab
                     if ($focus_on_tab_only && !event.ctrlKey) {
                         // strike up or left in the tab
@@ -200,22 +200,22 @@ $(document).ready(function(){
                                 $last_link.click().focus();
                                 event.preventDefault();
                         }
-                    
+
                     }
-     
+
             } )
             .on( "keydown", ".js-tabcontent", function( event ) {
-            
+
                     var $this = $(this),
                         $selector_tab_to_focus = $this.attr('aria-labelledby'),
                         $tab_to_focus = $("#" + $selector_tab_to_focus),
                         $parent_item = $tab_to_focus.parent(),
                         $parent_list = $parent_item.parent();
-                        
+
                     // CTRL up/Left
                     if ( (event.keyCode == 37 || event.keyCode == 38) && event.ctrlKey ) {
                         $tab_to_focus.focus();
-                        event.preventDefault();                             
+                        event.preventDefault();
                     }
                     // CTRL PageUp
                     if ( event.keyCode == 33 && event.ctrlKey ) {
@@ -234,7 +234,7 @@ $(document).ready(function(){
                     // CTRL PageDown
                     if ( event.keyCode == 34 && event.ctrlKey ) {
                         $tab_to_focus.focus();
-                                 
+
                         // if we are on last => activate first
                         if ( $parent_item.is( ".js-tablist__item:last-child" ) ) {
                            $parent_list.find( ".js-tablist__item:first-child .js-tablist__link" ).click().focus();
@@ -245,7 +245,7 @@ $(document).ready(function(){
                              }
                         event.preventDefault();
                     }
-            
+
             } )
             /* click on a tab link */
             .on( "click", ".js-link-to-tab", function( event ) {
@@ -256,9 +256,9 @@ $(document).ready(function(){
                     // activate tabs
                     $button_to_click.click();
                     // give focus to the good button
-                    setTimeout(function(){ $button_to_click.focus() }, 10);
+                    setTimeout(function(){ $button_to_click.focus(); }, 10);
             } );
-            
+
         }
-  
+
 });
