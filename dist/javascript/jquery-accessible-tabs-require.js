@@ -3,7 +3,19 @@
  * @requires jquery
  * @author dev@spike-shape.de
  */
-define(['jquery'], function($) {
+ 
+ (function (root, factory) {
+     if (typeof define === 'function' && define.amd) {
+         // AMD
+         define(['jquery'], factory);
+     } else if (typeof exports === 'object') {
+         // Node, CommonJS-like
+         module.exports = factory(require('jquery'));
+     } else {
+         // Browser globals (root is window)
+         root.returnExports = factory(root.jQuery);
+     }
+ }(this, function ($) {
 
   'use strict';
 
@@ -317,4 +329,4 @@ define(['jquery'], function($) {
     init: Tabs.init
   };
 
-});
+}));
