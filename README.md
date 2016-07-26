@@ -2,10 +2,8 @@
 ===========================
 
 __This is a work-in-progress!__
-I am working on a rework to use this script as a UMD (Universal Module Definition - for mor information check this [link](http://davidbcalhoun.com/2014/what-is-amd-commonjs-and-umd/ "What Is AMD, CommonJS, and UMD? by David Calhoun")) module.
-Use at your own risk.
-I haven't updated the demo yet but I am working on an example.
-The script itself works perfectly fine, though.
+I am working on a rework to use this script as a UMD (Universal Module Definition - check this [link](http://davidbcalhoun.com/2014/what-is-amd-commonjs-and-umd/ "What Is AMD, CommonJS, and UMD? by David Calhoun") for further reading) module.
+I am working on a public example and will add it later. The sample included works fine, though
 
 You can find a presentation and demo page of the original code here: http://a11y.nicolas-hoffmann.net/tabs/
 
@@ -84,18 +82,14 @@ Fragment is added to URL if you select a tab.
 
 - jQuery (others smaller libraries should be ok, but didn't test for the moment)
 - a small piece of CSS `` .js-tabcontent[aria-hidden=true] { display: none; } ``
-- respect the classes given above, and the convention a href="#**id_fourth**" id="label&#95;**id_fourth**" (will improve later)
+- respect the convention a href="#**id_fourth**" id="label&#95;**id_fourth**" (will improve later)
 - Use attribute data-hx="hx" (ex data-hx="h2" if your tab system is after a h1) to specify Hx structure in your tabs if they don't have one in tab content (will be added, and can be hidden throught a class invisible) OR
 - Indicate the hx structure contained in your tab contents, using the attribute data-existing-hx="h2"
-
-This jQuery plugin __doesn't style tabs__ (except ``.js-tabcontent[aria-hidden=true]`` of course), styles can be added using other classes.
 
 A demo page is here with full docs and examples: http://a11y.nicolas-hoffmann.net/tabs/
 
 It can be included for one, two tab systems or more in a page.
 
 Enjoy.
-
-<img src="http://www.nicolas-hoffmann.net/bordel/chuck-norris1.jpg" alt="Chuck Norris approved this" />
 
 P.S: this plugin is in [MIT license](https://github.com/nico3333fr/jquery-accessible-tabs-aria/blob/master/LICENSE). It couldn't be done without the precious help of @ScreenFeedFr, @sophieschuermans, @goetsu and @romaingervois.
