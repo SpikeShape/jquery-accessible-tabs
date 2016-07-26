@@ -2,17 +2,29 @@
   display: none;
 }
 
+.tabs {
+  width: 600px;
+}
+
 .tablist {
-  list-style-type: none;
+  display: table;
   margin: 0;
   padding: 0;
+  width: 100%;
 }
 
 .tablist-item {
-  display: inline-block;
+  border: 1px solid black;
+  display: table-cell;
 }
 
 .tablist-link {
   display: block;
-  padding: 5px 10px;
+  padding: 10px 20px;
+  text-decoration: none;
+}
+
+.tabcontent {
+  border: 1px solid black;
+  padding: 10px 20px;
 }
