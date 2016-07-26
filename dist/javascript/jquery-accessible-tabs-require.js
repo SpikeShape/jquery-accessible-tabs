@@ -3,8 +3,8 @@
  * @requires jquery
  * @author dev@spike-shape.de
  */
- 
- (function (root, factory) {
+
+ (function (window, factory) {
      if (typeof define === 'function' && define.amd) {
          // AMD
          define(['jquery'], factory);
@@ -12,8 +12,8 @@
          // Node, CommonJS-like
          module.exports = factory(require('jquery'));
      } else {
-         // Browser globals (root is window)
-         root.returnExports = factory(root.jQuery);
+         // Browser globals
+         accessibleTabs = factory(window.jQuery);
      }
  }(this, function ($) {
 
