@@ -4,48 +4,12 @@
   <title>Example tabs</title>
   <meta charset="utf-8" />
   <meta name="author" content="Nicolas Hoffmann" />
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
   <link rel="stylesheet" href="dist/styles/jquery-accessible-tabs.css" />
 
   <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
-
   <script src="dist/javascript/jquery-accessible-tabs-require.js"></script>
-
-  <style>
-
-    #page {
-      width: 960px;
-    }
-
-    .tabs {
-      width: 600px;
-    }
-
-    .tablist {
-      display: table;
-      margin: 0;
-      padding: 0;
-      width: 100%;
-    }
-
-    .tablist-item {
-      border: 1px solid black;
-      display: table-cell;
-    }
-
-    .tablist-link {
-      display: block;
-      padding: 10px 20px;
-      text-decoration: none;
-    }
-
-    .tabcontent {
-      border: 1px solid black;
-      padding: 10px 20px;
-    }
-
-  </style>
 </head>
 <body role="document">
   <div id="page">
@@ -79,6 +43,8 @@
       </div>
       <div id="id_fourth" class="tabcontent">
        here the content of 4th tab
+
+       <div id="element_inside" tabindex="0">element inside of 4th tab</div>
       </div>
     </div>
 
