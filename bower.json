@@ -1,24 +1,24 @@
 {
-  "name": "jquery-accessible-tabpanel-aria",
+  "name": "jquery-accessible-tabs-aria",
   "description": "A simple jQuery code to provide accessible tabs (tab panels) starting from a simple source, using ARIA",
-  "homepage": "http://a11y.nicolas-hoffmann.net/tabs/",
-  "main": "jquery-accessible-tabs.js",
+  "main": "dist/javascript/jquery-accessible-tabs-aria.js",
   "version": "1.3.0",
+  "authors": [
+    "Rodger Rüdiger"
+  ],
+  "license": "MIT",
   "keywords": [
     "Accessibility",
     "ARIA",
-    "tabs",
-	  "tab panel",
-	  "accessible",
-    "a11y",
-	  "jQueryPlugin"
+    "Tabs",
+    "Tab",
+    "panel",
+    "a11y"
   ],
-  "authors": [
-    {
-      "name": "Rodger Rüdiger",
-      "email": "dev@spike-shape.de",
-      "web": "http://www.spike-shape.de"
-    }
+  "homepage": "https://github.com/SpikeShape/jquery-accessible-tabs-aria",
+  "moduleType": [
+    "amd",
+    "globals"
   ],
   "dependencies": {
     "jquery": ">=1.7.0"
@@ -29,12 +29,11 @@
       "url": "git://github.com/SpikeShape/jquery-accessible-tabs-aria.git"
     }
   ],
-  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
     "bower_components",
-    "jquery-accessible-tabs_old_version.js",
-    "README.md"
+    "test",
+    "tests"
   ]
 }
