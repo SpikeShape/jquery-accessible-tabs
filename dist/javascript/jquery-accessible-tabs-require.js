@@ -142,36 +142,39 @@
           "aria-selected": "true",
           "tabindex": 0
         });
-      } else if ( Tabs.hash !== "" && $( "#" + Tabs.hash ).parents( Tabs.options.tab_content ).length ) {
-        // search if hash is IN tabs
+      }
+
+      // search if hash is IN tabs
+      if ( Tabs.hash !== "" && $( "#" + Tabs.hash ).parents( Tabs.options.tab_content ).length ){
         var $this_hash = $( "#" + Tabs.hash ),
             $tab_content_parent = $this_hash.parents( Tabs.options.tab_content ),
             $tab_content_parent_id = $tab_content_parent.attr( 'id' );
 
         $tab_content_parent.removeAttr( "aria-hidden" );
         // selection menu
-        $( "#label_" + $tab_content_parent_id + ".js-tablist__link" ).attr({
+        $( "#label_" + $tab_content_parent_id + Tabs.options.tab_link ).attr({
           "aria-selected": "true",
           "tabindex": 0
         });
-      } else {
-        // if no selected => select first
-        Tabs.$tabs.each( function() {
-          var $this = $( this ),
-          $tab_selected = $this.find( Tabs.options.tab_link + '[aria-selected="true"]' ),
-          $first_link = $this.find( Tabs.options.tab_link + ':first' ),
-          $first_content = $this.find( Tabs.options.tab_content + ':first' );
-
-          if ( $tab_selected.length === 0 ) {
-            $first_link.attr({
-              "aria-selected": "true",
-              "tabindex": 0
-            });
-            $first_content.removeAttr( "aria-hidden" );
-          }
-        });
       }
 
+      // if no selected => select first
+      Tabs.$tabs.each( function() {
+        var $this = $( this ),
+            $tab_selected = $this.find( Tabs.options.tab_link + '[aria-selected="true"]' ),
+            $first_link = $this.find( Tabs.options.tab_link + ':first' ),
+            $first_content = $this.find( Tabs.options.tab_content + ':first' );
+
+            console.log($tab_selected);
+
+        if ( !$tab_selected.length ) {
+          $first_link.attr({
+            "aria-selected": "true",
+            "tabindex": 0
+          });
+          $first_content.removeAttr( "aria-hidden" );
+        }
+      });
     },
 
     /**
