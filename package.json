@@ -1,6 +1,6 @@
 {
   "title": "jQuery accessible tabs using ARIA",
-  "name": "jquery-accessible-tabpanel-aria",
+  "name": "jquery-accessible-tabpanel",
   "description": "A simple jQuery code to provide accessible tabs (tab panels) starting from a simple source, using ARIA",
   "version": "1.3.0",
   "keywords": [
@@ -21,18 +21,18 @@
     "jquery": ">=1.7.0"
   },
   "bugs": {
-    "web": "https://github.com/SpikeShape/jquery-accessible-tabs-aria/issues"
+    "web": "https://github.com/SpikeShape/jquery-accessible-tabs/issues"
   },
   "repositories": [
     {
       "type": "git",
-      "url": "https://github.com/SpikeShape/jquery-accessible-tabs-aria.git"
+      "url": "https://github.com/SpikeShape/jquery-accessible-tabs.git"
     }
   ],
   "licenses": [
     {
       "name": "MIT",
-      "url": "https://github.com/SpikeShape/jquery-accessible-tabs-aria/blob/master/LICENSE"
+      "url": "https://github.com/SpikeShape/jquery-accessible-tabs/blob/master/LICENSE"
     }
   ]
 }
