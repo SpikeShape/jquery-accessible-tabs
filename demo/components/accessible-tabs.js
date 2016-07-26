@@ -7,7 +7,7 @@ requirejs.config({
 
 		//{{libs}}
 
-		'jquery-accessible-tabs': '../../dist/javascript/jquery-accessible-tabs-require',
+		'jquery-accessible-tabs': '../../dist/javascript/jquery-accessible-tabs',
 		'jquery.exists': 'libs/jquery.exists/jquery.exists',
 		'jquery': 'libs/jquery/dist/jquery.min'
 	},
