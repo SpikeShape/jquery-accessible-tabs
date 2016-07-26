@@ -165,8 +165,6 @@
             $first_link = $this.find( Tabs.options.tab_link + ':first' ),
             $first_content = $this.find( Tabs.options.tab_content + ':first' );
 
-            console.log($tab_selected);
-
         if ( !$tab_selected.length ) {
           $first_link.attr({
             "aria-selected": "true",
