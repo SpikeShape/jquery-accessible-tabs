@@ -1,9 +1,8 @@
 # jQuery accessible tabs using ARIA
 ===========================
 
-__This is a work-in-progress!__
-I am working on a rework to use this script as a UMD (Universal Module Definition - check this [link](http://davidbcalhoun.com/2014/what-is-amd-commonjs-and-umd/ "What Is AMD, CommonJS, and UMD? by David Calhoun") for further reading) module.
-I am working on a public example and will add it later. The sample included works fine, though
+This is a UMD (Universal Module Definition - check this [link](http://davidbcalhoun.com/2014/what-is-amd-commonjs-and-umd/ "What Is AMD, CommonJS, and UMD? by David Calhoun") for further reading) module based on the [jquery plugin](https://github.com/nico3333fr/jquery-accessible-tabs-aria) by [Nicolas Hoffmann](https://github.com/nico3333fr).
+I am working on a public example and will add it later. The sample included in this project works fine, though.
 
 You can find a presentation and demo page of the original code here: http://a11y.nicolas-hoffmann.net/tabs/
 
