@@ -1,5 +1,5 @@
 {
-  "name": "jquery-accessible-tabs",
+  "name": "jquery-accessible-tabs-umd",
   "description": "A simple jQuery code to provide accessible tabs (tab panels) starting from a simple source, using ARIA",
   "main": "dist/javascript/jquery-accessible-tabs.js",
   "version": "1.3.0",
